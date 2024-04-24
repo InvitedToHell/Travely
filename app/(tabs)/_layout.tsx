@@ -1,59 +1,81 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { ThemeProvider, useTheme } from "@react-navigation/native";
+import { Link, Tabs } from "expo-router";
+import React from "react";
+import { Pressable } from "react-native";
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import TravelyThemeDark from "@/assets/TravelyThemeDark";
+import TravelyThemeLight from "@/assets/TravelyThemeLight";
+import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import { useColorScheme } from "@/components/useColorScheme";
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof MaterialIcons>["name"];
   color: string;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return (
+    <MaterialIcons
+      size={28}
+      style={{ marginBottom: -3, color: props.color }}
+      {...props}
+    />
+  );
 }
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { colors } = useTheme();
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+    <ThemeProvider
+      value={colorScheme === "dark" ? TravelyThemeDark : TravelyThemeLight}
+    >
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: colors.primary,
+          headerShown: useClientOnlyValue(false, true),
         }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </Tabs>
+      >
+        <Tabs.Screen
+          name="MapScreen"
+          options={{
+            title: "Map",
+            tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+          }}
+        />
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: "Home",
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="home-filled" color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="ProfileScreen"
+          options={{
+            title: "Profile",
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="account-circle" color={color} />
+            ),
+            headerRight: () => (
+              <Link href="/modal" asChild>
+                <Pressable>
+                  {({ pressed }) => (
+                    <MaterialIcons
+                      name="settings"
+                      size={25}
+                      color={colors.text}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>
+            ),
+          }}
+        />
+      </Tabs>
+    </ThemeProvider>
   );
 }
