@@ -13,7 +13,7 @@ jobs:
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 20.x
           cache: yarn
 
       - name: 🏗 Setup EAS
@@ -25,5 +25,5 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn install
 
-      - name: 🚀 Create update
-        run: eas update --auto --non-interactive
+      - name: 🚀 Build IPA
+        run: eas build -p ios --local --non-interactive
