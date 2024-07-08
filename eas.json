@@ -10,7 +10,11 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "env": {
+        "API_URL": "https://api.example.com"
+      },
+    }
   },
   "submit": {
     "production": {}

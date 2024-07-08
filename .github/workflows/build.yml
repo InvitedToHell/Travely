@@ -27,4 +27,4 @@ jobs:
         run: yarn install
 
       - name: 🚀 Build IPA
-        run: eas build -p ios --local --non-interactive
+        run: eas build -p ios --local --non-interactive --no-wait

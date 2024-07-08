@@ -7,7 +7,7 @@ const DefaultTheme: Theme = {
     background: "#F0FAFB",
     card: "#F0FAFB",
     text: "#091D20",
-    border: "#091D20",
+    border: "#DFF3F6",
     notification: "#E293C8",
   },
 };
