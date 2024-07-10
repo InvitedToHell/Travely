@@ -3,7 +3,7 @@ import { useTheme } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { ScrollView, StyleSheet, useColorScheme } from "react-native";
 
-const username = "Max Mustermann";
+const username = "Nils Mustermann";
 
 export default function ProfileScreen() {
   let colorScheme = useColorScheme();
